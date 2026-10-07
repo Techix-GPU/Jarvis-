@@ -20,8 +20,12 @@ jobs:
         with:
           gradle-version: 8.7
       - run: unzip -q jarvis-android.zip
+      - name: Gradle settings
+        run: |
+          printf "android.useAndroidX=true\norg.gradle.jvmargs=-Xmx3g\n" >> jarvis/gradle.properties
       - run: cd jarvis && gradle assembleDebug --no-daemon
       - uses: actions/upload-artifact@v4
         with:
           name: jarvis-apk
           path: jarvis/app/build/outputs/apk/debug/app-debug.apk
+        
